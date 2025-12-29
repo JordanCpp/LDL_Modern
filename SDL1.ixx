@@ -552,22 +552,11 @@ export
 		SDL_NUMEVENTS = 32
 	};
 
-	typedef int (__cdecl* pSDL_Init)(Uint32 flags);
-	typedef void(__cdecl* pSDL_Quit)();
-	typedef SDL_Surface*(__cdecl* pSDL_SetVideoMode)(int width, int height, int bpp, Uint32 flags);
-
-	typedef int(__cdecl* pSDL_PollEvent)(SDL_Event* event);
-
-	typedef const char* (__cdecl* pSDL_GetError)();
-
-	pSDL_Init SDL_Init = nullptr;
-	pSDL_Quit SDL_Quit = nullptr;
-
-	pSDL_SetVideoMode SDL_SetVideoMode = nullptr;
-
-	pSDL_PollEvent SDL_PollEvent = nullptr;
-
-	pSDL_GetError SDL_GetError = nullptr;
+	inline int          (__cdecl* SDL_Init)(Uint32 flags) = nullptr;
+	inline void         (__cdecl* SDL_Quit)() = nullptr;
+	inline SDL_Surface* (__cdecl* SDL_SetVideoMode)(int width, int height, int bpp, Uint32 flags) = nullptr;
+	inline int          (__cdecl* SDL_PollEvent)(SDL_Event* event) = nullptr;
+	inline const char*  (__cdecl* SDL_GetError)() = nullptr;
 }
 
 export
@@ -582,14 +571,11 @@ export
 
 			if (_load)
 			{
-				SDL_Init = (pSDL_Init)GetProcAddress(_load, "SDL_Init");
-				SDL_Quit = (pSDL_Quit)GetProcAddress(_load, "SDL_Quit");
-
-				SDL_SetVideoMode = (pSDL_SetVideoMode)GetProcAddress(_load, "SDL_SetVideoMode");
-
-				SDL_PollEvent = (pSDL_PollEvent)GetProcAddress(_load, "SDL_PollEvent");
-
-				SDL_GetError = (pSDL_GetError)GetProcAddress(_load, "SDL_GetError");
+				Bind(SDL_Init, "SDL_Init");
+				Bind(SDL_Quit, "SDL_Quit");
+				Bind(SDL_SetVideoMode, "SDL_SetVideoMode");
+				Bind(SDL_PollEvent, "SDL_PollEvent");
+				Bind(SDL_GetError, "SDL_GetError");
 			}
 		}
 
@@ -601,6 +587,12 @@ export
 			}
 		}
 	private:
+		template<typename T>
+		void Bind(T& funcPtr, const char* name) 
+		{
+			funcPtr = reinterpret_cast<T>(GetProcAddress(_load, name));
+		}
+
 		HMODULE _load;
 	};
 }

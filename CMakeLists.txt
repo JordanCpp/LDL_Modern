@@ -34,7 +34,7 @@ target_sources(main
         FILE_SET CXX_MODULES FILES
             Win32.ixx
             std.ixx
-            LDL.ixx
+            "Graphics.ixx"
             SDL1.ixx
 )
 

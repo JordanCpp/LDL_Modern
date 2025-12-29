@@ -1,3 +1,8 @@
+// Copyright 2025-present Evgeny Zoshchuk (JordanCpp).
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at
+// https://www.boost.org/LICENSE_1_0.txt) 
+
 module;
 
 export module SDL1;
@@ -564,8 +569,7 @@ export
 	class SDL_Loader
 	{
 	public:
-		SDL_Loader() :
-			_load(nullptr)
+		static void Init()
 		{
 			_load = LoadLibraryA("SDL.dll");
 
@@ -588,11 +592,11 @@ export
 		}
 	private:
 		template<typename T>
-		void Bind(T& funcPtr, const char* name) 
+		static void Bind(T& funcPtr, const char* name)
 		{
 			funcPtr = reinterpret_cast<T>(GetProcAddress(_load, name));
 		}
 
-		HMODULE _load;
+		inline static HMODULE _load = nullptr;
 	};
 }

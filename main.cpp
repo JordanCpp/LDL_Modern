@@ -1,16 +1,65 @@
 
+import SDL1;
 import std;
-import Win32;
+
+class Canvas
+{
+public:
+    Canvas(SDL_Surface* screen) :
+        _screen(screen)
+    {
+    }
+
+    ~Canvas()
+    {
+        SDL_Quit();
+    }
+private:
+    SDL_Surface* _screen;
+};
+
+std::expected<std::unique_ptr<Canvas>, const char*> CanvasNew(int width, int height)
+{
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        return std::unexpected(SDL_GetError());
+    }
+
+    auto screen = SDL_SetVideoMode(width, height, 24, SDL_HWSURFACE);
+
+    if (!screen)
+    {
+        SDL_Quit();
+        return std::unexpected(SDL_GetError());
+    }
+
+    return std::make_unique<Canvas>(screen);
+}
 
 int main()
 {
+    SDL_Loader loader;
 
-    std::string title   = "Hello Habr!";
-    std::string message = "Crazy programming!";
+    auto canvas = CanvasNew(800, 600);
 
-    MessageBoxA(GetActiveWindow(), title.c_str(), message.c_str(), 0x00000000L);
+    if (!canvas)
+    {
+        return -1;
+    }
 
-    ExitProcess(0);
+    bool running = true;
+    SDL_Event event;
 
-	return 0;
+    while (running)
+    {
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+            {
+                running = false;
+            }
+        }
+    }
+
+    return 0;
 }

@@ -15,7 +15,7 @@ extern "C" void EntryPoint()
 {
 	int result = main();
 
-	ExitProcess(0);
+	ExitProcess(result);
 }
 
 export namespace std
@@ -505,12 +505,12 @@ export
 
 	void* operator new[](size_t bytes)
 	{
-		return std::malloc(bytes);
+		return ::operator new(bytes);
 	}
 
 	void operator delete[](void* ptr)
 	{
-		return std::free(ptr);
+		::operator delete(ptr);
 	}
 
 	void* operator new(size_t bytes, void* ptr)

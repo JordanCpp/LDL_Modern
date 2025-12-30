@@ -5,9 +5,11 @@
 
 import Graphics;
 
+using namespace Graphics;
+
 int main()
 {
-    auto canvasResource = Graphics::CanvasNew(800, 600);
+    auto canvasResource = CanvasNew(800, 600, "Canvas SDL");
 
     if (!canvasResource)
     {
@@ -16,8 +18,14 @@ int main()
 
     auto& canvas = *canvasResource;
 
-    while (canvas->GetEvent())
+    Events::Event event;
+
+    while (canvas->GetEvent(event))
     {
+        if (event.Type == Events::Event::IsQuit)
+        {
+            canvas->StopEvent();
+        }
     }
 
     return 0;

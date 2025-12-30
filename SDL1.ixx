@@ -562,6 +562,7 @@ export
 	inline SDL_Surface* (__cdecl* SDL_SetVideoMode)(int width, int height, int bpp, Uint32 flags) = nullptr;
 	inline int          (__cdecl* SDL_PollEvent)(SDL_Event* event) = nullptr;
 	inline const char*  (__cdecl* SDL_GetError)() = nullptr;
+	inline void         (__cdecl* SDL_WM_SetCaption)(const char* title, const char* icon) = nullptr;
 }
 
 export
@@ -580,6 +581,7 @@ export
 				Bind(SDL_SetVideoMode, "SDL_SetVideoMode");
 				Bind(SDL_PollEvent, "SDL_PollEvent");
 				Bind(SDL_GetError, "SDL_GetError");
+				Bind(SDL_WM_SetCaption, "SDL_WM_SetCaption");
 			}
 		}
 

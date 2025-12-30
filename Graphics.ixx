@@ -12,6 +12,30 @@ import SDL1;
 
 export namespace Graphics
 {
+    namespace Events
+    {
+        class Quit
+        {
+        public:
+            std::uint8_t Type;
+        };
+
+        class Event
+        {
+        public:
+            enum
+            {
+                IsQuit = 1
+            };
+
+            union
+            {
+                std::uint8_t Type;
+                Events::Quit Quit;
+            };
+        };
+    }
+
     class Canvas
     {
     public:
@@ -26,29 +50,34 @@ export namespace Graphics
             SDL_Quit();
         }
 
-        bool GetEvent()
+        bool GetEvent(Events::Event& dest)
         {
             if (_running)
             {
                 SDL_Event event = {};
 
-                while (SDL_PollEvent(&event))
+                if (SDL_PollEvent(&event))
                 {
                     if (event.type == SDL_QUIT)
                     {
-                        _running = false;
+                        dest.Type = Events::Event::IsQuit;
                     }
                 }
             }
 
             return _running;
         }
+
+        void StopEvent()
+        {
+            _running = false;
+        }
     private:
         bool         _running;
         SDL_Surface* _screen;
     };
 
-    std::expected<std::unique_ptr<Canvas>, const char*> CanvasNew(int width, int height)
+    std::expected<std::unique_ptr<Canvas>, const char*> CanvasNew(int width, int height, const std::string& title)
     {
         SDL_Loader::Init();
 
@@ -64,6 +93,8 @@ export namespace Graphics
             SDL_Quit();
             return std::unexpected(SDL_GetError());
         }
+
+        SDL_WM_SetCaption(title.c_str(), nullptr);
 
         return std::make_unique<Canvas>(screen);
     }

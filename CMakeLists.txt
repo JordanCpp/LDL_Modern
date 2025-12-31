@@ -36,6 +36,14 @@ target_sources(main
             std.ixx
             "Graphics.ixx"
             SDL1.ixx
+            "LDL/LDL.Vec2.ixx"
+            "LDL/LDL.Vec2i.ixx"
+            "LDL/LDL.Vec2u.ixx"
+            "LDL/LDL.BaseWindow.ixx"
+            "LDL/LDL.Enums.ixx"
+            "LDL/LDL.Color.ixx"
+            "LDL/Win9x/LDL.MainWindow.ixx"
+            "LDL/LDL.ixx"
 )
 
 target_compile_features(main PRIVATE cxx_std_20)

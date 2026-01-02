@@ -7,6 +7,9 @@ module;
 
 export module std;
 
+import stdcpp.cstddef;
+import stdcpp.cstdint;
+import stdcpp.cstdlib;
 import Win32;
 
 extern "C" int main();
@@ -21,35 +24,25 @@ extern "C" void EntryPoint()
 export namespace std
 {
 	/********************************************************************************************************************
-												        	 stdint.h 
+												        	 cstdint
 	********************************************************************************************************************/
-	using uint8_t  = unsigned char;
-	using int8_t   = signed char;
-	using uint16_t = unsigned short;
-	using int16_t  = signed short;
-	using uint32_t = unsigned int;
-	using int32_t  = signed int;
+	using uint8_t  = stdcpp::uint8_t;
+	using int8_t   = stdcpp::int8_t;
+	using uint16_t = stdcpp::uint16_t;
+	using int16_t  = stdcpp::int16_t;
+	using uint32_t = stdcpp::uint32_t;
+	using int32_t  = stdcpp::int32_t;
 
 	/********************************************************************************************************************
 															 stddef.h
 	********************************************************************************************************************/
-	using size_t = unsigned int;
+	using size_t = stdcpp::size_t;
 
 	/********************************************************************************************************************
 															 stdlib.h
 	********************************************************************************************************************/
-    void* malloc(size_t size)
-    {
-        return HeapAlloc(GetProcessHeap(), 0, size);
-    }
-
-    void free(void* ptr)
-    {
-        if (ptr)
-        {
-            HeapFree(GetProcessHeap(), 0, ptr);
-        }
-    }
+	using stdcpp::malloc;
+	using stdcpp::free;
 
 	/********************************************************************************************************************
 															 string.h

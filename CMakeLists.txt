@@ -33,7 +33,10 @@ target_sources(main
     PUBLIC
         FILE_SET CXX_MODULES FILES
             Win32.ixx
-            std.ixx
+            "stdcpp/cstddef.ixx"
+            "stdcpp/cstdint.ixx"
+            "stdcpp/cstdlib.ixx"
+            "stdcpp/std.ixx"
             "Graphics.ixx"
             SDL1.ixx
             "LDL/LDL.Vec2.ixx"

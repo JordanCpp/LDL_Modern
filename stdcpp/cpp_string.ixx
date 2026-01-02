@@ -9,24 +9,30 @@ export module stdcpp.cpp_string;
 
 import stdcpp.cpp_new;
 import stdcpp.cstring;
+import stdcpp.allocator;
 
 export namespace stdcpp
 {
-	template <typename T>
+	template <typename T, typename Allocator = stdcpp::allocator<T>>
 	class basic_string
 	{
 	private:
-		size_t _capacity;
-		size_t _position;
-		T* _content;
+		Allocator _alloc;
+		size_t    _capacity;
+		size_t    _position;
+		T*        _content;
 
-	public:
-		~basic_string()
+		void freeContent()
 		{
 			if (_content)
 			{
-				delete[] _content;
+				_alloc.deallocate(_content, _capacity);
 			}
+		}
+	public:
+		~basic_string()
+		{
+			freeContent();
 		}
 
 		basic_string() :
@@ -140,14 +146,19 @@ export namespace stdcpp
 
 			if (total > _capacity)
 			{
-				T* p = allocate(total);
+				T* p = _alloc.allocate(total);
 
-				for (size_t i = 0; i < _position; i++)
+				if (_content)
 				{
-					p[i] = _content[i];
+					for (size_t i = 0; i < _position; i++)
+					{
+						p[i] = _content[i];
+					}
+
+					freeContent();
 				}
 
-				_content = p;
+				_content  = p;
 				_capacity = total;
 			}
 		}

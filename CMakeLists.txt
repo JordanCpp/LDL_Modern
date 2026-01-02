@@ -40,6 +40,7 @@ target_sources(main
             "stdcpp/cpp_string.ixx"
             "stdcpp/cstring.ixx"
             "stdcpp/cpp_allocator.ixx"
+            "stdcpp/cpp_vector.ixx"
             "stdcpp/std.ixx"
             "Graphics.ixx"
             SDL1.ixx

@@ -13,6 +13,7 @@ import stdcpp.cstdlib;
 import stdcpp.cpp_new;
 import stdcpp.cpp_string;
 import stdcpp.cstring;
+import stdcpp.vector;
 import Win32;
 
 extern "C" int main();
@@ -49,6 +50,9 @@ export namespace std
 	using stdcpp::strlen;
 
 	using string = stdcpp::string;
+
+	template <typename T>
+	using vector = stdcpp::vector<T>;
 	/********************************************************************************************************************
 															 <expected>
 	********************************************************************************************************************/

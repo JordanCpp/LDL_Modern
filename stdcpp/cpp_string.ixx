@@ -19,33 +19,33 @@ export namespace stdcpp
 	private:
 		Allocator _alloc;
 		size_t    _capacity;
-		size_t    _position;
-		T*        _content;
+		size_t    _size;
+		T*        _data;
 
-		void freeContent()
+		void Destroy()
 		{
-			if (_content)
+			if (_data)
 			{
-				_alloc.deallocate(_content, _capacity);
+				_alloc.deallocate(_data, _capacity);
 			}
 		}
 	public:
 		~basic_string()
 		{
-			freeContent();
+			Destroy();
 		}
 
 		basic_string() :
 			_capacity(0),
-			_position(0),
-			_content(nullptr)
+			_size(0),
+			_data(nullptr)
 		{
 		}
 
 		basic_string(const T* source) :
 			_capacity(0),
-			_position(0),
-			_content(nullptr)
+			_size(0),
+			_data(nullptr)
 		{
 			size_t length = strlen(source);
 
@@ -53,7 +53,7 @@ export namespace stdcpp
 
 			for (size_t i = 0; i < length; i++)
 			{
-				_content[i] = source[i];
+				_data[i] = source[i];
 			}
 		}
 
@@ -67,7 +67,7 @@ export namespace stdcpp
 
 				for (size_t i = 0; i < length; i++)
 				{
-					_content[i] = source[i];
+					_data[i] = source[i];
 				}
 			}
 
@@ -76,7 +76,7 @@ export namespace stdcpp
 
 		bool operator== (const basic_string<T>& source)
 		{
-			return (strcmp(_content, source.c_str()) == 0);
+			return (strcmp(_data, source.c_str()) == 0);
 		}
 
 		basic_string& operator=(const T* source)
@@ -87,7 +87,7 @@ export namespace stdcpp
 
 			for (size_t i = 0; i < length; i++)
 			{
-				_content[i] = source[i];
+				_data[i] = source[i];
 			}
 
 			return *this;
@@ -113,7 +113,7 @@ export namespace stdcpp
 
 				for (size_t i = 0; i < length; i++)
 				{
-					_content[i] = source[i];
+					_data[i] = source[i];
 				}
 			}
 
@@ -127,12 +127,12 @@ export namespace stdcpp
 
 		size_t size() const
 		{
-			return _position;
+			return _size;
 		}
 
 		const T* c_str() const
 		{
-			return _content;
+			return _data;
 		}
 
 		T* allocate(size_t count)
@@ -148,17 +148,17 @@ export namespace stdcpp
 			{
 				T* p = _alloc.allocate(total);
 
-				if (_content)
+				if (_data)
 				{
-					for (size_t i = 0; i < _position; i++)
+					for (size_t i = 0; i < _size; i++)
 					{
-						p[i] = _content[i];
+						p[i] = _data[i];
 					}
 
-					freeContent();
+					Destroy();
 				}
 
-				_content  = p;
+				_data  = p;
 				_capacity = total;
 			}
 		}
@@ -170,8 +170,8 @@ export namespace stdcpp
 				reserve(count);
 			}
 
-			_position = count;
-			_content[_position] = '\0';
+			_size = count;
+			_data[_size] = '\0';
 		}
 
 		void push_back(const T& element)
@@ -180,34 +180,34 @@ export namespace stdcpp
 			{
 				reserve(2);
 			}
-			else if (_position + 1 >= _capacity)
+			else if (_size + 1 >= _capacity)
 			{
 				reserve(_capacity * 2);
 			}
 
-			_content[_position] = element;
-			_position++;
-			_content[_position] = '\0';
+			_data[_size] = element;
+			_size++;
+			_data[_size] = '\0';
 		}
 
 		const T& at(size_t index) const
 		{
-			return _content[index];
+			return _data[index];
 		}
 
 		T& at(size_t index)
 		{
-			return _content[index];
+			return _data[index];
 		}
 
 		const T& operator[] (size_t index) const
 		{
-			return _content[index];
+			return _data[index];
 		}
 
 		T& operator[] (size_t index)
 		{
-			return _content[index];
+			return _data[index];
 		}
 	};
 

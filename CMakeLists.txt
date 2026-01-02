@@ -41,6 +41,8 @@ target_sources(main
             "stdcpp/cstring.ixx"
             "stdcpp/cpp_allocator.ixx"
             "stdcpp/cpp_vector.ixx"
+            "stdcpp/cpp_unique_ptr.ixx"
+            "stdcpp/cpp_expected.ixx"
             "stdcpp/std.ixx"
             "Graphics.ixx"
             SDL1.ixx

@@ -9,5 +9,6 @@ export module stdcpp.cstddef;
 
 export namespace stdcpp
 {
-	using size_t = unsigned int;
+	using size_t    = unsigned int;
+	using nullptr_t = decltype(nullptr);
 }

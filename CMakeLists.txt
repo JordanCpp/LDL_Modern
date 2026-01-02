@@ -36,6 +36,9 @@ target_sources(main
             "stdcpp/cstddef.ixx"
             "stdcpp/cstdint.ixx"
             "stdcpp/cstdlib.ixx"
+            "stdcpp/cpp_new.ixx"
+            "stdcpp/cstring.ixx"
+            "stdcpp/cpp_string.ixx"
             "stdcpp/std.ixx"
             "Graphics.ixx"
             SDL1.ixx

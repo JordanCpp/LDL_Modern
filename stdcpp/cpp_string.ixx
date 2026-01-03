@@ -11,9 +11,9 @@ import stdcpp.cpp_new;
 import stdcpp.cstring;
 import stdcpp.allocator;
 
-export namespace stdcpp
+export namespace std
 {
-	template <typename T, typename Allocator = stdcpp::allocator<T>>
+	template <typename T, typename Allocator = std::allocator<T>>
 	class basic_string
 	{
 	private:

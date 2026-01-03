@@ -7,7 +7,7 @@ module;
 
 export module stdcpp.cstddef;
 
-export namespace stdcpp
+export namespace std
 {
 	using size_t    = unsigned int;
 	using nullptr_t = decltype(nullptr);

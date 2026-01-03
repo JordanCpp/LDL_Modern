@@ -11,7 +11,7 @@ import stdcpp.cstddef;
 import stdcpp.cpp_new;
 import stdcpp.allocator;
 
-export namespace stdcpp
+export namespace std
 {
     template <typename T, typename Allocator = allocator<T>>
     class vector

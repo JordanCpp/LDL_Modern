@@ -13,12 +13,12 @@ export
 {
 	void* operator new(size_t bytes)
 	{
-		return stdcpp::malloc(bytes);
+		return std::malloc(bytes);
 	}
 
 	void operator delete(void* ptr)
 	{
-		return stdcpp::free(ptr);
+		return std::free(ptr);
 	}
 
 	void* operator new[](size_t bytes)

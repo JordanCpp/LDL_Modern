@@ -7,16 +7,16 @@ module;
 
 export module std;
 
-import stdcpp.cstddef;
-import stdcpp.cstdint;
-import stdcpp.cstdlib;
-import stdcpp.cpp_new;
-import stdcpp.cpp_string;
-import stdcpp.cstring;
-import stdcpp.vector;
-import stdcpp.unique_ptr;
-import stdcpp.expected;
-import stdcpp.ostream;
+export import stdcpp.cstddef;
+export import stdcpp.cstdint;
+export import stdcpp.cstdlib;
+export import stdcpp.cpp_new;
+export import stdcpp.cpp_string;
+export import stdcpp.cstring;
+export import stdcpp.vector;
+export import stdcpp.unique_ptr;
+export import stdcpp.expected;
+export import stdcpp.ostream;
 import Win32;
 
 extern "C" int main();
@@ -30,53 +30,4 @@ extern "C" void EntryPoint()
 
 export namespace std
 {
-	/********************************************************************************************************************
-												        	 cstdint
-	********************************************************************************************************************/
-	using uint8_t  = stdcpp::uint8_t;
-	using int8_t   = stdcpp::int8_t;
-	using uint16_t = stdcpp::uint16_t;
-	using int16_t  = stdcpp::int16_t;
-	using uint32_t = stdcpp::uint32_t;
-	using int32_t  = stdcpp::int32_t;
-	/********************************************************************************************************************
-															 stddef.h
-	********************************************************************************************************************/
-	using size_t = stdcpp::size_t;
-	/********************************************************************************************************************
-															 stdlib.h
-	********************************************************************************************************************/
-	using stdcpp::malloc;
-	using stdcpp::free;
-	/********************************************************************************************************************
-													    	cstring
-	********************************************************************************************************************/
-	using stdcpp::strlen;
-	/********************************************************************************************************************
-															string
-	********************************************************************************************************************/
-	using string = stdcpp::string;
-	/********************************************************************************************************************
-															vector
-	********************************************************************************************************************/
-	template <typename T>
-	using vector = stdcpp::vector<T>;
-	/********************************************************************************************************************
-															unique_ptr
-	********************************************************************************************************************/
-	template<typename T, typename D = stdcpp::default_delete<T>>
-	using unique_ptr = stdcpp::unique_ptr<T, D>;
-	using stdcpp::make_unique;
-	using stdcpp::default_delete;
-	/********************************************************************************************************************
-															expected
-	********************************************************************************************************************/
-	using stdcpp::unexpect_t;
-	using stdcpp::unexpect;
-	using stdcpp::unexpected;
-	template<typename T, typename E> using expected = stdcpp::expected<T, E>;
-
-	using stdcpp::ostream;
-	using stdcpp::cout;
-	using stdcpp::endl;
 }

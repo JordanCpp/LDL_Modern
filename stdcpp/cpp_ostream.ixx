@@ -12,7 +12,7 @@ import stdcpp.cstdint;
 import stdcpp.cstring;
 import stdcpp.cpp_string;
 
-export namespace stdcpp
+export namespace std
 {
     class ostream
     {
@@ -47,7 +47,7 @@ export namespace stdcpp
             if (str)
             {
                 DWORD written;
-                WriteFile(_handle, str, (uint32_t)stdcpp::strlen(str), &written, nullptr);
+                WriteFile(_handle, str, (uint32_t)strlen(str), &written, nullptr);
             }
 
             return *this;

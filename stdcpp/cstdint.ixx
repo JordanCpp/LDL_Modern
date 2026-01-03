@@ -7,7 +7,7 @@ module;
 
 export module stdcpp.cstdint;
 
-export namespace stdcpp
+export namespace std
 {
 	using uint8_t  = unsigned char;
 	using int8_t   = signed char;

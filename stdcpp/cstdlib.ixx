@@ -10,7 +10,7 @@ export module stdcpp.cstdlib;
 import Win32;
 import stdcpp.cstddef;
 
-export namespace stdcpp
+export namespace std
 {
     void* malloc(size_t size)
     {

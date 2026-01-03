@@ -10,7 +10,7 @@ export module stdcpp.allocator;
 import stdcpp.cstddef;
 import stdcpp.cpp_new;
 
-export namespace stdcpp
+export namespace std
 {
     template <typename T>
     class allocator

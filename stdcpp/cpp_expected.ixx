@@ -10,7 +10,7 @@ export module stdcpp.expected;
 import stdcpp.cstddef;
 import stdcpp.cpp_new;
 
-export namespace stdcpp
+export namespace std
 {
 	template<typename E>
 	class unexpect_t

@@ -7,7 +7,7 @@ module;
 
 export module stdcpp.cstring;
 
-export namespace stdcpp
+export namespace std
 {
 	size_t strlen(const char* src)
 	{

@@ -10,7 +10,7 @@ export module stdcpp.unique_ptr;
 import stdcpp.cstddef;
 import stdcpp.cpp_new;
 
-export namespace stdcpp
+export namespace std
 {
 	template<typename T>
 	struct default_delete

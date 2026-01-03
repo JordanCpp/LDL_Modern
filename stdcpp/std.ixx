@@ -17,17 +17,4 @@ export import stdcpp.vector;
 export import stdcpp.unique_ptr;
 export import stdcpp.expected;
 export import stdcpp.ostream;
-import Win32;
-
-extern "C" int main();
-
-extern "C" void EntryPoint()
-{
-	int result = main();
-
-	ExitProcess(result);
-}
-
-export namespace std
-{
-}
+import stdcpp.system;

@@ -57,6 +57,20 @@ export namespace std
 			}
 		}
 
+		basic_string(const basic_string& source) :
+			_capacity(0), _size(0), _data(nullptr)
+		{
+			if (source._size > 0) 
+			{
+				resize(source._size);
+
+				for (size_t i = 0; i < source._size; i++) 
+				{
+					_data[i] = source._data[i];
+				}
+			}
+		}
+
 		basic_string& operator=(const T& source)
 		{
 			if (&source != this)
@@ -74,8 +88,18 @@ export namespace std
 			return *this;
 		}
 
-		bool operator== (const basic_string<T>& source)
+		bool operator== (const basic_string<T>& source) const
 		{
+			if (_size != source.size())
+			{
+				return false;
+			}
+
+			if (!_data || !source.c_str())
+			{
+				return _size == source.size();
+			}
+			
 			return (strcmp(_data, source.c_str()) == 0);
 		}
 
@@ -132,7 +156,7 @@ export namespace std
 
 		const T* c_str() const
 		{
-			return _data;
+			return _data ? _data : "";
 		}
 
 		T* allocate(size_t count)
@@ -142,24 +166,30 @@ export namespace std
 
 		void reserve(size_t count)
 		{
-			size_t total = count + 1;
-
-			if (total > _capacity)
+			if (count <= _capacity)
 			{
-				T* p = _alloc.allocate(total);
+				return;
+			}
 
-				if (_data)
+			size_t total = count + 1;
+			T* p = _alloc.allocate(total);
+
+			if (_data)
+			{
+				for (size_t i = 0; i < _size; i++)
 				{
-					for (size_t i = 0; i < _size; i++)
-					{
-						p[i] = _data[i];
-					}
-
-					Destroy();
+					p[i] = _data[i];
 				}
 
-				_data  = p;
-				_capacity = total;
+				_alloc.deallocate(_data, _capacity);
+			}
+
+			_data     = p;
+			_capacity = total;
+
+			if (_data && _size == 0)
+			{
+				_data[0] = '\0';
 			}
 		}
 

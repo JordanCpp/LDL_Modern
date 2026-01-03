@@ -7,6 +7,16 @@ import std;
 
 int main()
 {
+    std::vector<std::string> vec;
+
+    vec.push_back("1");
+    vec.push_back("2");
+
+    for (auto i : vec)
+    {
+        std::cout << i << std::endl;
+    }
+
     std::string message = "Crazy programming!";
 
     std::cout << message << std::endl;

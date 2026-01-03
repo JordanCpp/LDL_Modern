@@ -62,8 +62,19 @@ export namespace std
 
             return *this;
         }
+
+        ostream& operator<<(ostream& (*pf)(ostream&))
+        {
+            return pf(*this);
+        }
     };
 
     inline ostream cout;
-    inline constexpr char endl = '\n';
+
+    ostream& endl(ostream& os)
+    {
+        os << '\n';
+
+        return os;
+    }
 }

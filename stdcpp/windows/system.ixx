@@ -21,10 +21,10 @@ extern "C" void EntryPoint()
 	ExitProcess(result);
 }
 
+using namespace std;
+
 export
 {
-	using namespace std;
-
 	class Writter
 	{
 	public:
@@ -34,7 +34,7 @@ export
 			_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 		}
 
-		void Write(const char* source, size_t size)
+		void Write(const char* source, std::size_t size)
 		{
 			if (source)
 			{

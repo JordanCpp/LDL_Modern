@@ -43,6 +43,7 @@ target_sources(main
             "stdcpp/cpp_vector.ixx"
             "stdcpp/cpp_unique_ptr.ixx"
             "stdcpp/cpp_expected.ixx"
+            "stdcpp/cpp_ostream.ixx"
             "stdcpp/std.ixx"
             "Graphics.ixx"
             SDL1.ixx

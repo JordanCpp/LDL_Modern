@@ -4,16 +4,12 @@
 // https://www.boost.org/LICENSE_1_0.txt) 
 
 import std;
-import Win32;
 
 int main()
 {
-    std::vector<int> vec;
-
-    std::string title   = "Hello Habr!";
     std::string message = "Crazy programming!";
 
-    MessageBoxA(GetActiveWindow(), title.c_str(), message.c_str(), 0x00000000L);
+    std::cout << message << std::endl;
 
     return 0;
 }

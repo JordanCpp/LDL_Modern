@@ -16,6 +16,7 @@ import stdcpp.cstring;
 import stdcpp.vector;
 import stdcpp.unique_ptr;
 import stdcpp.expected;
+import stdcpp.ostream;
 import Win32;
 
 extern "C" int main();
@@ -74,4 +75,8 @@ export namespace std
 	using stdcpp::unexpect;
 	using stdcpp::unexpected;
 	template<typename T, typename E> using expected = stdcpp::expected<T, E>;
+
+	using stdcpp::ostream;
+	using stdcpp::cout;
+	using stdcpp::endl;
 }

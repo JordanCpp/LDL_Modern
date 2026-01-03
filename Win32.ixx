@@ -36,7 +36,7 @@ extern "C"
     using LONG      = long;
     using DWORD     = unsigned long;
     using WORD      = unsigned short;
-    using LPDWORD   = WORD*;
+    using LPDWORD   = DWORD*;
     using ULONG_PTR = unsigned long;
     using ATOM      = WORD;
     using WNDPROC   = LRESULT(__stdcall*)(HWND, UINT, WPARAM, LPARAM);
@@ -179,6 +179,31 @@ extern "C"
      const DWORD WS_MAXIMIZEBOX = 0x00010000L;
 
      const DWORD WS_OVERLAPPEDWINDOW = (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+
+     const DWORD STD_INPUT_HANDLE  = ((DWORD)-10);
+     const DWORD STD_OUTPUT_HANDLE = ((DWORD)-11);
+     const DWORD STD_ERROR_HANDLE  = ((DWORD)-12);
+
+     using LPCVOID = const void*;
+     using PVOID = void*;
+
+     struct OVERLAPPED 
+     {
+         ULONG_PTR Internal;
+         ULONG_PTR InternalHigh;
+         union 
+         {
+             struct 
+             {
+                 DWORD Offset;
+                 DWORD OffsetHigh;
+             } DUMMYSTRUCTNAME;
+             PVOID Pointer;
+         } DUMMYUNIONNAME;
+         HANDLE hEvent;
+     };
+
+     using LPOVERLAPPED = OVERLAPPED*;
     /********************************************************************************************************************
                                                             Process
     ********************************************************************************************************************/
@@ -219,4 +244,8 @@ extern "C"
     __declspec(dllimport) HICON   __stdcall LoadIconA(HINSTANCE hInstance, LPCSTR lpIconName);
     __declspec(dllimport) HCURSOR __stdcall LoadCursorA(HINSTANCE hInstance, LPCSTR lpCursorName);
     __declspec(dllimport) BOOL    __stdcall WriteConsoleA(HANDLE hConsoleOutput, const void* lpBuffer, DWORD nNumberOfCharsToWrite, LPDWORD lpNumberOfCharsWritten, LPVOID lpReserved);
+
+    __declspec(dllimport) HANDLE __stdcall GetStdHandle(DWORD nStdHandle);
+
+    __declspec(dllimport) BOOL __stdcall WriteFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped);
 }

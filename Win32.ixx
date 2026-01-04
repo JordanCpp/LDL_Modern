@@ -207,8 +207,8 @@ extern "C"
     /********************************************************************************************************************
                                                             Process
     ********************************************************************************************************************/
-    __declspec(dllimport) void* __stdcall GetProcessHeap();
-    __declspec(dllimport) void  __stdcall ExitProcess(unsigned int);
+    __declspec(dllimport) HANDLE __stdcall GetProcessHeap();
+    __declspec(dllimport) void   __stdcall ExitProcess(unsigned int);
 
     /********************************************************************************************************************
                                                              Heap

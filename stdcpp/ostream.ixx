@@ -7,58 +7,35 @@ module;
 
 export module stdcpp.ostream;
 
-import Win32;
 import stdcpp.cstdint;
 import stdcpp.cstring;
 import stdcpp.string;
+import stdcpp.system;
 
 export namespace std
 {
     class ostream
     {
     private:
-        void* _handle;
 
     public:
-        constexpr ostream() noexcept : _handle(nullptr) {}
-
-        void init()
-        {
-            if (!_handle)
-            {
-                _handle = GetStdHandle(STD_OUTPUT_HANDLE);
-            }
-        }
-
         ostream& operator<<(const string& str)
         {
-            init();
-
-            DWORD written;
-            WriteFile(_handle, str.c_str(), (uint32_t)str.size(), &written, nullptr);
+            system::write(str.c_str(), str.size());
 
             return *this;
         }
 
         ostream& operator<<(const char* str)
         {
-            init();
-
-            if (str)
-            {
-                DWORD written;
-                WriteFile(_handle, str, (uint32_t)strlen(str), &written, nullptr);
-            }
+            system::write(str, strlen(str));
 
             return *this;
         }
 
         ostream& operator<<(char c)
         {
-            init();
-
-            DWORD written;
-            WriteFile(_handle, &c, 1, &written, nullptr);
+            system::write(&c, 1);
 
             return *this;
         }

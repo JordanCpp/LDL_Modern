@@ -14,8 +14,12 @@ import stdcpp.cstring;
 
 extern "C" int main();
 
+static HANDLE currentProcessHeap = nullptr;
+
 extern "C" void EntryPoint()
 {
+	currentProcessHeap = GetProcessHeap();
+
 	int result = main();
 
 	ExitProcess(result);
@@ -27,35 +31,25 @@ export namespace system
 {
 	void* malloc(size_t size)
 	{
-		return HeapAlloc(GetProcessHeap(), 0, size);
+		return HeapAlloc(currentProcessHeap, 0, size);
 	}
 
 	void free(void* ptr)
 	{
 		if (ptr)
 		{
-			HeapFree(GetProcessHeap(), 0, ptr);
+			HeapFree(currentProcessHeap, 0, ptr);
 		}
 	}
 
-	class Writer
+	void write(const char* source, size_t length)
 	{
-	public:
-		Writer() :
-			_handle(nullptr)
+		if (source)
 		{
-			_handle = GetStdHandle(STD_OUTPUT_HANDLE);
-		}
+			DWORD  written = 0;
+			HANDLE handle  = GetStdHandle(STD_OUTPUT_HANDLE);
 
-		void Write(const char* source, std::size_t size)
-		{
-			if (source)
-			{
-				DWORD written;
-				WriteFile(_handle, source, (uint32_t)strlen(source), &written, nullptr);
-			}
+			WriteFile(handle, source, length, &written, nullptr);
 		}
-	private:
-		HANDLE _handle;
-	};
+	}
 }

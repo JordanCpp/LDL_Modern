@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.28)
 project(LegacyLinkProject LANGUAGES CXX)
 
 set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT Embedded)
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "/INCREMENTAL:NO")
+set(CMAKE_EXE_LINKER_FLAGS_DEBUG          "/INCREMENTAL:NO")
 set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "/INCREMENTAL:NO")
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "/INCREMENTAL:NO")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE        "/INCREMENTAL:NO")
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY_DEFAULT "") 
 
@@ -15,11 +15,11 @@ if(MSVC)
     foreach(flag_var
         CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
         CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-        string(REPLACE "/Od" "" ${flag_var} "${${flag_var}}")
+        string(REPLACE "/Od"  "" ${flag_var} "${${flag_var}}")
         string(REPLACE "/MDd" "" ${flag_var} "${${flag_var}}")
-        string(REPLACE "/MD" "" ${flag_var} "${${flag_var}}")
+        string(REPLACE "/MD"  "" ${flag_var} "${${flag_var}}")
         string(REPLACE "/MTd" "" ${flag_var} "${${flag_var}}")
-        string(REPLACE "/MT" "" ${flag_var} "${${flag_var}}")
+        string(REPLACE "/MT"  "" ${flag_var} "${${flag_var}}")
     endforeach()
 endif()
 

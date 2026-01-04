@@ -7,21 +7,21 @@ module;
 
 export module stdcpp.cstdlib;
 
-import Win32;
 import stdcpp.cstddef;
+import stdcpp.system;
 
 export namespace std
 {
     void* malloc(size_t size)
     {
-        return HeapAlloc(GetProcessHeap(), 0, size);
+        return system::malloc(size);
     }
 
     void free(void* ptr)
     {
         if (ptr)
         {
-            HeapFree(GetProcessHeap(), 0, ptr);
+            system::free(ptr);
         }
     }
 }

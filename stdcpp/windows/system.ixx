@@ -23,12 +23,25 @@ extern "C" void EntryPoint()
 
 using namespace std;
 
-export
+export namespace system
 {
-	class Writter
+	void* malloc(size_t size)
+	{
+		return HeapAlloc(GetProcessHeap(), 0, size);
+	}
+
+	void free(void* ptr)
+	{
+		if (ptr)
+		{
+			HeapFree(GetProcessHeap(), 0, ptr);
+		}
+	}
+
+	class Writer
 	{
 	public:
-		Writter() :
+		Writer() :
 			_handle(nullptr)
 		{
 			_handle = GetStdHandle(STD_OUTPUT_HANDLE);

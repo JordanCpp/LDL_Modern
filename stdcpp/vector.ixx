@@ -8,7 +8,7 @@ module;
 export module stdcpp.vector;
 
 import stdcpp.cstddef;
-import stdcpp.cpp_new;
+import stdcpp.memory;
 import stdcpp.allocator;
 
 export namespace std

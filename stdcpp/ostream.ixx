@@ -10,7 +10,7 @@ export module stdcpp.ostream;
 import Win32;
 import stdcpp.cstdint;
 import stdcpp.cstring;
-import stdcpp.cpp_string;
+import stdcpp.string;
 
 export namespace std
 {

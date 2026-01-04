@@ -5,9 +5,9 @@
 
 module;
 
-export module stdcpp.cpp_string;
+export module stdcpp.string;
 
-import stdcpp.cpp_new;
+import stdcpp.memory;
 import stdcpp.cstring;
 import stdcpp.allocator;
 

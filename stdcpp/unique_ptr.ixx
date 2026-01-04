@@ -8,7 +8,7 @@ module;
 export module stdcpp.unique_ptr;
 
 import stdcpp.cstddef;
-import stdcpp.cpp_new;
+import stdcpp.memory;
 
 export namespace std
 {

@@ -36,7 +36,7 @@ target_sources(main
             "stdcpp/cstddef.ixx"
             "stdcpp/cstdint.ixx"
             "stdcpp/cstdlib.ixx"
-            "stdcpp/cpp_new.ixx"
+            "stdcpp/memory.ixx"
             "stdcpp/string.ixx"
             "stdcpp/cstring.ixx"
             "stdcpp/allocator.ixx"

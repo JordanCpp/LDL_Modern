@@ -5,7 +5,7 @@
 
 module;
 
-export module stdcpp.cpp_new;
+export module stdcpp.memory;
 
 import stdcpp.cstdlib;
 

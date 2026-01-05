@@ -5,7 +5,7 @@
 
 module;
 
-export module SDL1;
+export module SDL;
 
 import std;
 import Win32;

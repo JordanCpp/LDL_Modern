@@ -8,7 +8,7 @@ module;
 export module Graphics;
 
 import std;
-import SDL1;
+import SDL;
 
 export namespace Graphics
 {

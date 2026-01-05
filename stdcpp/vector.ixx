@@ -9,6 +9,7 @@ export module stdcpp.vector;
 
 import stdcpp.cstddef;
 import stdcpp.memory;
+import stdcpp.utility;
 import stdcpp.allocator;
 
 export namespace std
@@ -74,7 +75,7 @@ export namespace std
 
             for (size_t i = 0; i < _size; ++i)
             {
-                new (new_data + i) T(static_cast<T&&>(_data[i]));
+                new (new_data + i) T(std::move(_data[i]));
                 _data[i].~T();
             }
 
@@ -105,7 +106,7 @@ export namespace std
                 reserve(_capacity == 0 ? 1 : _capacity * 2);
             }
 
-            new (_data + _size) T(static_cast<T&&>(value));
+            new (_data + _size) T(std::move(value));
             _size++;
         }
 

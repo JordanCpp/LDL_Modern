@@ -14,11 +14,13 @@ import stdcpp.cstring;
 
 extern "C" int main();
 
-static HANDLE currentProcessHeap = nullptr;
+static HANDLE currentProcessHeap  = nullptr;
+static HANDLE currentOutputHandle = nullptr;
 
 extern "C" void EntryPoint()
 {
-	currentProcessHeap = GetProcessHeap();
+	currentProcessHeap  = GetProcessHeap();
+	currentOutputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	int result = main();
 
@@ -47,9 +49,8 @@ export namespace system
 		if (source)
 		{
 			DWORD  written = 0;
-			HANDLE handle  = GetStdHandle(STD_OUTPUT_HANDLE);
 
-			WriteFile(handle, source, length, &written, nullptr);
+			WriteFile(currentOutputHandle, source, length, &written, nullptr);
 		}
 	}
 }

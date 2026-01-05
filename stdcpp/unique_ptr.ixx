@@ -8,6 +8,7 @@ module;
 export module stdcpp.unique_ptr;
 
 import stdcpp.cstddef;
+import stdcpp.utility;
 import stdcpp.memory;
 
 export namespace std
@@ -35,7 +36,7 @@ export namespace std
 	{
 	private:
 		T* _ptr = nullptr;
-
+		[[no_unique_address]] Deleter _deleter;
 	public:
 		constexpr unique_ptr() noexcept :
 			_ptr(nullptr)
@@ -47,7 +48,7 @@ export namespace std
 		{
 		}
 
-		explicit unique_ptr(T* ptr) noexcept :
+		constexpr unique_ptr(T* ptr) noexcept :
 			_ptr(ptr)
 		{
 		}
@@ -67,12 +68,19 @@ export namespace std
 			return *this;
 		}
 
-		~unique_ptr()
+		constexpr ~unique_ptr()
 		{
 			reset();
 		}
 
-		T* release() noexcept
+		constexpr unique_ptr& operator=(nullptr_t) noexcept 
+		{
+			reset();
+
+			return *this;
+		}
+
+		constexpr T* release() noexcept
 		{
 			T* temp = _ptr;
 			_ptr = nullptr;
@@ -80,18 +88,18 @@ export namespace std
 			return temp;
 		}
 
-		void reset(T* ptr = nullptr) noexcept
+		constexpr void reset(T* ptr = nullptr) noexcept
 		{
 			T* oldPtr = _ptr;
 			_ptr = ptr;
 
 			if (oldPtr)
 			{
-				Deleter{}(oldPtr);
+				_deleter(oldPtr);
 			}
 		}
 
-		T* get() const noexcept
+		constexpr T* get() const noexcept
 		{
 			return _ptr;
 		}
@@ -101,12 +109,12 @@ export namespace std
 			return _ptr != nullptr;
 		}
 
-		T& operator*() const
+		constexpr T& operator*() const
 		{
 			return *_ptr;
 		}
 
-		T* operator->() const noexcept
+		constexpr T* operator->() const noexcept
 		{
 			return _ptr;
 		}
@@ -115,6 +123,6 @@ export namespace std
 	template<typename T, typename... Args>
 	unique_ptr<T> make_unique(Args&&... args)
 	{
-		return unique_ptr<T>(new T(static_cast<Args&&>(args)...));
+		return unique_ptr<T>(new T(std::forward<Args>(args)...));
 	}
 }

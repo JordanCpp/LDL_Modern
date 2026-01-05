@@ -23,7 +23,7 @@ export namespace std
         size_t    _size;
         size_t    _capacity;
 
-        void Destroy()
+        constexpr void Destroy()
         {
             if (_data)
             {
@@ -39,14 +39,14 @@ export namespace std
         using value_type = T;
         using iterator   = T*;
 
-        vector() : 
+        constexpr vector() :
             _data(nullptr), 
             _size(0), 
             _capacity(0) 
         {
         }
 
-        ~vector()
+        constexpr ~vector()
         {
             Destroy();
         }
@@ -54,7 +54,7 @@ export namespace std
         vector(const vector&) = delete;
         vector& operator=(const vector&) = delete;
 
-        vector(vector&& other) noexcept :
+        constexpr vector(vector&& other) noexcept :
             _data(other._data), 
             _size(other._size), 
             _capacity(other._capacity)
@@ -64,7 +64,7 @@ export namespace std
             other._capacity = 0;
         }
 
-        void reserve(size_t new_cap)
+        constexpr void reserve(size_t new_cap)
         {
             if (new_cap <= _capacity)
             {
@@ -88,7 +88,7 @@ export namespace std
             _capacity = new_cap;
         }
 
-        void push_back(const T& value)
+        constexpr void push_back(const T& value)
         {
             if (_size == _capacity)
             {
@@ -99,7 +99,7 @@ export namespace std
             _size++;
         }
 
-        void push_back(T&& value)
+        constexpr void push_back(T&& value)
         {
             if (_size == _capacity)
             {
@@ -110,7 +110,7 @@ export namespace std
             _size++;
         }
 
-        void pop_back()
+        constexpr void pop_back()
         {
             if (_size > 0)
             {
@@ -119,37 +119,37 @@ export namespace std
             }
         }
 
-        size_t size() const 
+        constexpr size_t size() const
         { 
             return _size; 
         }
 
-        size_t capacity() const 
+        constexpr size_t capacity() const
         {
             return _capacity; 
         }
 
-        bool empty() const 
+        constexpr bool empty() const
         { 
             return _size == 0; 
         }
 
-        T& operator[](size_t index) 
+        constexpr T& operator[](size_t index)
         { 
             return _data[index]; 
         }
 
-        const T& operator[](size_t index) const 
+        constexpr const T& operator[](size_t index) const
         { 
             return _data[index]; 
         }
 
-        iterator begin() 
+        constexpr iterator begin()
         { 
             return _data; 
         }
 
-        iterator end() 
+        constexpr iterator end()
         { 
             return _data + _size; 
         }

@@ -11,6 +11,7 @@ import stdcpp.cstdlib;
 
 export
 {
+	[[nodiscard]]
 	void* operator new(size_t bytes)
 	{
 		return std::malloc(bytes);
@@ -21,6 +22,7 @@ export
 		return std::free(ptr);
 	}
 
+	[[nodiscard]]
 	void* operator new[](size_t bytes)
 	{
 		return ::operator new(bytes);
@@ -31,12 +33,14 @@ export
 		::operator delete(ptr);
 	}
 
-	void* operator new(size_t bytes, void* ptr)
+	[[nodiscard]]
+	constexpr void* operator new(size_t bytes, void* ptr)
 	{
 		return ptr;
 	}
 
-	void* operator new[](size_t bytes, void* ptr)
+	[[nodiscard]]
+	constexpr void* operator new[](size_t bytes, void* ptr)
 	{
 		return ptr;
 	}

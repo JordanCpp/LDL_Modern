@@ -14,14 +14,22 @@ import stdcpp.cstring;
 
 extern "C" int main();
 
-static HANDLE currentProcessHeap  = nullptr;
-static HANDLE currentOutputHandle = nullptr;
+static HANDLE GetHeap() noexcept 
+{
+	static HANDLE h = GetProcessHeap();
+
+	return h;
+}
+
+static HANDLE GetOutput() noexcept 
+{
+	static HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	return h;
+}
 
 extern "C" void EntryPoint()
 {
-	currentProcessHeap  = GetProcessHeap();
-	currentOutputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-
 	int result = main();
 
 	ExitProcess(result);
@@ -31,26 +39,26 @@ using namespace std;
 
 export namespace system
 {
-	void* malloc(size_t size)
+	void* malloc(size_t size) noexcept
 	{
-		return HeapAlloc(currentProcessHeap, 0, size);
+		return HeapAlloc(GetHeap(), 0, size);
 	}
 
-	void free(void* ptr)
+	void free(void* ptr) noexcept
 	{
 		if (ptr)
 		{
-			HeapFree(currentProcessHeap, 0, ptr);
+			HeapFree(GetHeap(), 0, ptr);
 		}
 	}
 
-	void write(const char* source, size_t length)
+	void write(const char* source, size_t length) noexcept
 	{
 		if (source)
 		{
 			DWORD  written = 0;
 
-			WriteFile(currentOutputHandle, source, length, &written, nullptr);
+			WriteFile(GetOutput(), source, length, &written, nullptr);
 		}
 	}
 }

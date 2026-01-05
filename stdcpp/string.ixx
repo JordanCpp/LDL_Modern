@@ -9,6 +9,7 @@ export module stdcpp.string;
 
 import stdcpp.memory;
 import stdcpp.cstring;
+import stdcpp.utility;
 import stdcpp.allocator;
 
 export namespace std
@@ -22,7 +23,7 @@ export namespace std
 		size_t    _size;
 		T*        _data;
 
-		void Destroy()
+		constexpr void Destroy()
 		{
 			if (_data)
 			{
@@ -30,19 +31,19 @@ export namespace std
 			}
 		}
 	public:
-		~basic_string()
+		constexpr ~basic_string()
 		{
 			Destroy();
 		}
 
-		basic_string() :
+		constexpr basic_string() :
 			_capacity(0),
 			_size(0),
 			_data(nullptr)
 		{
 		}
 
-		basic_string(const T* source) :
+		constexpr basic_string(const T* source) :
 			_capacity(0),
 			_size(0),
 			_data(nullptr)
@@ -57,7 +58,7 @@ export namespace std
 			}
 		}
 
-		basic_string(const basic_string& source) :
+		constexpr basic_string(const basic_string& source) :
 			_capacity(0), _size(0), _data(nullptr)
 		{
 			if (source._size > 0) 
@@ -71,7 +72,18 @@ export namespace std
 			}
 		}
 
-		basic_string& operator=(const T& source)
+		constexpr basic_string(basic_string&& other) noexcept :
+			_alloc(std::move(other._alloc)),
+			_capacity(other._capacity),
+			_size(other._size),
+			_data(other._data)
+		{
+			other._data     = nullptr;
+			other._size     = 0;
+			other._capacity = 0;
+		}
+
+		constexpr basic_string& operator=(const T& source)
 		{
 			if (&source != this)
 			{
@@ -88,7 +100,7 @@ export namespace std
 			return *this;
 		}
 
-		bool operator== (const basic_string<T>& source) const
+		constexpr bool operator== (const basic_string<T>& source) const
 		{
 			if (_size != source.size())
 			{
@@ -103,7 +115,7 @@ export namespace std
 			return (strcmp(_data, source.c_str()) == 0);
 		}
 
-		basic_string& operator=(const T* source)
+		constexpr basic_string& operator=(const T* source)
 		{
 			size_t length = strlen(source);
 
@@ -117,7 +129,7 @@ export namespace std
 			return *this;
 		}
 
-		basic_string<T>& operator+=(const basic_string<T>& source)
+		constexpr basic_string<T>& operator+=(const basic_string<T>& source)
 		{
 			for (size_t i = 0; i < source.size(); i++)
 			{
@@ -127,7 +139,7 @@ export namespace std
 			return *this;
 		}
 
-		basic_string<T>& operator=(const basic_string<T>& source)
+		constexpr basic_string<T>& operator=(const basic_string<T>& source)
 		{
 			if (&source != this)
 			{
@@ -144,27 +156,29 @@ export namespace std
 			return *this;
 		}
 
-		size_t capacity() const
+		constexpr size_t capacity() const
 		{
 			return _capacity;
 		}
 
-		size_t size() const
+		[[nodiscard]]  
+		constexpr size_t size() const
 		{
 			return _size;
 		}
 
-		const T* c_str() const
+		[[nodiscard]] 
+		constexpr const T* c_str() const
 		{
 			return _data ? _data : "";
 		}
 
-		T* allocate(size_t count)
+		constexpr T* allocate(size_t count)
 		{
 			return new T[count];
 		}
 
-		void reserve(size_t count)
+		constexpr void reserve(size_t count)
 		{
 			if (count <= _capacity)
 			{
@@ -193,7 +207,7 @@ export namespace std
 			}
 		}
 
-		void resize(size_t count)
+		constexpr void resize(size_t count)
 		{
 			if (_capacity < count)
 			{
@@ -204,7 +218,7 @@ export namespace std
 			_data[_size] = '\0';
 		}
 
-		void push_back(const T& element)
+		constexpr void push_back(const T& element)
 		{
 			if (_capacity == 0)
 			{
@@ -220,22 +234,22 @@ export namespace std
 			_data[_size] = '\0';
 		}
 
-		const T& at(size_t index) const
+		constexpr const T& at(size_t index) const
 		{
 			return _data[index];
 		}
 
-		T& at(size_t index)
+		constexpr T& at(size_t index)
 		{
 			return _data[index];
 		}
 
-		const T& operator[] (size_t index) const
+		constexpr const T& operator[] (size_t index) const
 		{
 			return _data[index];
 		}
 
-		T& operator[] (size_t index)
+		constexpr T& operator[] (size_t index)
 		{
 			return _data[index];
 		}

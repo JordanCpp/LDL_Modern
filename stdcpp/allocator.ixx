@@ -24,7 +24,8 @@ export namespace std
         template <typename U>
         constexpr allocator(const allocator<U>&) noexcept {}
 
-        [[nodiscard]] T* allocate(size_t n)
+        [[nodiscard]] 
+        constexpr T* allocate(size_t n)
         {
             if (n == 0)
             {
@@ -34,7 +35,7 @@ export namespace std
             return static_cast<T*>(::operator new(n * sizeof(T)));
         }
 
-        void deallocate(T* p, size_t n) noexcept
+        constexpr void deallocate(T* p, size_t n) noexcept
         {
             if (p)
             {
@@ -44,13 +45,13 @@ export namespace std
     };
 
     template <typename T, typename U>
-    bool operator==(const allocator<T>&, const allocator<U>&) noexcept 
+    constexpr bool operator==(const allocator<T>&, const allocator<U>&) noexcept
     { 
         return true; 
     }
 
     template <typename T, typename U>
-    bool operator!=(const allocator<T>&, const allocator<U>&) noexcept 
+    constexpr bool operator!=(const allocator<T>&, const allocator<U>&) noexcept
     { 
         return false; 
     }
